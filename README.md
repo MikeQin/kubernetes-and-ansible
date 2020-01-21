@@ -167,6 +167,7 @@ ansible --version
 
 * Test Connections
 ```
+ansible localhost -m ping
 ansible -i /etc/ansible/hosts [groupName] -m ping
 ansible -i /etc/ansible/hosts workers -m ping
 ```
