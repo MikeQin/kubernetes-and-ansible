@@ -1,7 +1,7 @@
-[kubernetes.master.nodes]
+[kubernetesMasterNodes]
 master ansible_host=192.168.56.100
 
-[kubernetes.worker.nodes]
+[kubernetesWorkerNodes]
 node1 ansible_host=192.168.56.101
 node2 ansible_host=192.168.56.102
 
