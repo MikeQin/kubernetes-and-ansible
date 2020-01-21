@@ -167,8 +167,8 @@ ansible --version
 
 * Test Connections
 ```
-ansible -i ./hosts kubernetes.worker.nodes -m ping
-ansible -i ./hosts workers -m ping
+ansible -i /etc/ansible/hosts [groupName] -m ping
+ansible -i /etc/ansible/hosts workers -m ping
 ```
 
 ## Run Ansible Playbook
