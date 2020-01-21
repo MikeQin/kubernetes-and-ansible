@@ -1,4 +1,4 @@
-# kubernetes-and-ansible
+# Kubernetes & Ansible
 This repository has set of ansible playbooks created to setup a kubernetes cluster fully automated with one master and multiple worker nodes. This will work on physical servers, virtual machines, aws cloud, google cloud or any other cloud servers. This has been tested and verified on Centos 7.3 64 bit operating systems. Also you can refer this link for manual configuration https://www.learnitguide.net/2018/08/install-and-configure-kubernetes-cluster.html
 
 How to use this (Setup Instructions):
@@ -65,3 +65,54 @@ Facebook : http://www.facebook.com/learnitguide
 Twitter : http://www.twitter.com/learnitguide
 
 Visit our Website : https://www.learnitguide.net
+
+## Configure Static IP on CentOS
+
+* Login with 'root' user.
+
+* Edit `ifcfg-enp0s3` file as per the following code. (In vi editor, use 'i' for insert, 'esc' key to enter command mode and 'wq' for save and quit)
+
+`vi /etc/sysconfig/network-scripts/ifcfg-enp0s3`
+
+```properties
+ONBOOT=yes
+USERCTL=no
+```
+* Edit `ifcfg-enp0s8` file as per the following code. (Note. IPADDR value should be in between Lower Address Bound and Upper Address Bound values)
+
+`vi /etc/sysconfig/network-scripts/ifcfg-enp0s8`
+
+```properties
+BOOTPROTO=none
+ONBOOT=yes
+IPADDR=192.168.56.141
+PREFIX=24
+```
+* Restart network OR reboot
+```bash
+systemctl restart network
+```
+```bash
+reboot
+```
+* Test with the ping command, try it in a Windows Command Prompt window (CMD).
+
+```cmd
+Microsoft Windows [Version 10.0.17763.253]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\tutorial>ping 192.168.56.141
+
+Pinging 192.168.56.141 with 32 bytes of data:
+Reply from 192.168.56.141: bytes=32 time=1ms TTL=64
+Reply from 192.168.56.141: bytes=32 time<1ms TTL=64
+Reply from 192.168.56.141: bytes=32 time=1ms TTL=64
+Reply from 192.168.56.141: bytes=32 time=1ms TTL=64
+
+Ping statistics for 192.168.56.141:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 1ms, Average = 0ms
+```
+
+Source: https://qiita.com/Tutorial/items/5ab1ec4ba55396b089f8
