@@ -1,4 +1,5 @@
 # Kubernetes & Ansible
+
 This repository has set of ansible playbooks created to setup a kubernetes cluster fully automated with one master and multiple worker nodes. This will work on physical servers, virtual machines, aws cloud, google cloud or any other cloud servers. This has been tested and verified on Centos 7.3 64 bit operating systems. Also you can refer this link for manual configuration https://www.learnitguide.net/2018/08/install-and-configure-kubernetes-cluster.html
 
 How to use this (Setup Instructions):
@@ -116,3 +117,55 @@ Approximate round trip times in milli-seconds:
 ```
 
 Source: https://qiita.com/Tutorial/items/5ab1ec4ba55396b089f8
+
+## Establish Connection through SSH Key
+
+* Generate SSH Keys
+```bash
+ssh-keygen
+```
+
+* SSH Copy ID
+```
+ssh-copy-id -f root@192.168.56.100
+ssh-copy-id -f root@192.168.56.101
+ssh-copy-id -f root@192.168.56.102
+```
+
+* Test Connection from Master to Node1 & Node2
+```
+ssh root@192.168.56.101 # node1
+ssh root@192.168.56.102 # node2
+```
+
+## Install Python3 on CentOS 8
+
+* Better to install with regular user
+
+* Install Python3
+```
+sudo dnf update
+sudo dnf install python3
+```
+
+* Check Verstion
+```
+python3 -V
+```
+
+## Install Ansible on CentOS 8
+
+* Better to install with regular user
+```
+pip3 install ansible --user
+```
+
+* Check Version
+```
+ansible --version
+```
+
+* Test Connections
+```
+ansible -i ./hosts kubernetes-worker-nodes -m ping
+```
