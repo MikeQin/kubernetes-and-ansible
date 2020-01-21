@@ -165,9 +165,10 @@ pip3 install ansible --user
 ansible --version
 ```
 
-* Test Connections
+* Test Connections as a user, not the root
 ```
 ansible localhost -m ping
+ansible remote_hostname -m ping
 ansible -i /etc/ansible/hosts [groupName] -m ping
 ansible -i /etc/ansible/hosts workers -m ping
 ```
