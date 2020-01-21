@@ -170,3 +170,10 @@ ansible --version
 ansible -i ./hosts kubernetes.worker.nodes -m ping
 ansible -i ./hosts workers -m ping
 ```
+
+## Run Ansible Playbook
+```
+ansible-playbook settingup_kubernetes_cluster.yml
+
+ansible-playbook join_kubernetes_workers_nodes.yml
+```
