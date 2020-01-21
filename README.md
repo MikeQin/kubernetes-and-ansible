@@ -167,5 +167,6 @@ ansible --version
 
 * Test Connections
 ```
-ansible -i ./hosts kubernetes-worker-nodes -m ping
+ansible -i ./hosts kubernetes.worker.nodes -m ping
+ansible -i ./hosts workers -m ping
 ```

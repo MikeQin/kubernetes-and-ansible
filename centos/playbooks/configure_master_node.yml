@@ -1,5 +1,5 @@
 ---
-- hosts: kubernetes-master-nodes
+- hosts: kubernetes.master.nodes
   vars_files:
   - env_variables 
   tasks:
