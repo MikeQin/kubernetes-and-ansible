@@ -144,8 +144,8 @@ ssh root@192.168.56.102 # node2
 
 * Install Python3
 ```
-sudo dnf update
-sudo dnf install python3
+sudo yum update
+sudo yum install python3
 ```
 
 * Check Verstion
