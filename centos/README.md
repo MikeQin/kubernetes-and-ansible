@@ -14,6 +14,9 @@ sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/dock
 
 - INSTALL DOCKER ENGINE - COMMUNITY
 ```
+## To solve podman-manpages conflict, remove podman-manpages
+sudo yum remove -y podman-manpages
+
 sudo yum clean all
 
 sudo yum install -y --nobest docker-ce docker-ce-cli containerd.io
