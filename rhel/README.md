@@ -33,6 +33,14 @@ sudo cat /sys/class/dmi/id/product_uuid
 update-alternatives --set iptables /usr/sbin/iptables-legacy
 ```
 
+### Disable Swap in `/etc/fstab`
+
+```
+sudo vim /etc/fstab
+```
+
+then reboot the machine to take effect.
+
 ### Install Docker CE
 
 See [install-docker.sh](./install-docker.sh)
@@ -105,13 +113,137 @@ yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 
 systemctl enable --now kubelet
 
+cat <<EOF > /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+
+sysctl --system
+
+lsmod | grep br_netfilter
+modprobe br_netfilter
+
+systemctl daemon-reload
+systemctl restart kubelet
+
+yum update
+
 exit
 ```
 
-### Create Kubernetes Cluster
+## Create Kubernetes Cluster
+
+- Create K8s cluster
 
 ```
-sudo kubeadm init <args>
+# sudo kubeadm init <args>
 
 sudo kubeadm init --apiserver-advertise-address=10.157.163.243 --pod-network-cidr=10.244.0.0/16
 ```
+
+- Verify the cluster
+
+```
+sudo systemctl status kubelet
+```
+
+- To start using your cluster, you need to run the following as a regular user:
+
+```
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+# sudo chown didn't work here below:
+# sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+Alternatively, if you are the root user, you can run:
+My preference runs as a root user
+
+```
+export KUBECONFIG=/etc/kubernetes/admin.conf
+```
+
+- You should now deploy a pod network to the cluster.
+  Run `kubectl apply -f [podnetwork].yaml` with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+```
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134e0ed5af15c65e414cf26827915/Documentation/kube-flannel.yml
+```
+
+- Verify and check CoreDNS Pod is running:
+
+```
+kubectl get pods --all-namespaces
+```
+
+- Then you can join any number of worker nodes by running the following on each as root:
+
+1. SSH to the nodes
+2. Become root (sudo su)
+3. Run:
+
+```
+kubeadm join 10.157.163.243:6443 --token hnfjhy.2yrurw2378j5nrbf \
+    --discovery-token-ca-cert-hash sha256:24eb40e8179430f1244ad00c9c845fbb867072cbb146e3dfdb42105ad5c57296
+```
+
+General format of `kubeadm join`:
+
+```
+kubeadm join --token <token> <control-plane-host>:<control-plane-port> --discovery-token-ca-cert-hash sha256:<hash>
+```
+
+4. If you do not have the token, you can get it by running the following command on the control-plane node:
+
+```
+kubeadm token list
+```
+
+By default, tokens expire after 24 hours. If you are joining a node to the cluster after the current token has expired, you can create a new token by running the following command on the control-plane node:
+
+```
+kubeadm token create
+```
+
+If you don’t have the value of `--discovery-token-ca-cert-hash`, you can get it by running the following command chain on the control-plane node:
+
+```
+openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | \
+   openssl dgst -sha256 -hex | sed 's/^.* //'
+```
+
+## Tear Down
+
+To undo what kubeadm did, you should first drain the node and make sure that the node is empty before shutting it down.
+
+Talking to the control-plane node with the appropriate credentials, run:
+
+```
+kubectl drain <node name> --delete-local-data --force --ignore-daemonsets
+kubectl delete node <node name>
+```
+
+Then, on the node being removed, reset all kubeadm installed state:
+
+```
+kubeadm reset
+```
+
+The reset process does not reset or clean up iptables rules or IPVS tables. If you wish to reset iptables, you must do so manually:
+
+```
+iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
+```
+
+If you want to reset the IPVS tables, you must run the following command:
+
+```
+ipvsadm -C
+```
+
+If you wish to start over simply run kubeadm init or kubeadm join with the appropriate arguments.
+
+## Kubernetes Official Reference
+
+- Creating a single control-plane cluster with kubeadm, https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
