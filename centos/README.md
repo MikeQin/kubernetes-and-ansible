@@ -229,7 +229,7 @@ kubeadm join 192.168.56.100:6443 --token nndczt.nbvkmh27dymisw8r \
     --discovery-token-ca-cert-hash sha256:a9d3e839d7aa6633b4f0b13b8aeeb9ca34f1a4d0ae454bf243b4de7913052f1d
 ```
 
-* Verify as a regular user, not the root
+* Verify as a regular user on Master-Node, not the root
 ```
 kubectl get nodes
 ```
