@@ -30,7 +30,7 @@ To access the Rancher server UI, open a browser and go to the hostname or addres
 Run the kubectl command below on an existing Kubernetes cluster running a supported Kubernetes version to import it into Rancher:
 
 ```
-curl --insecure -sfL https://h0006414:8443/v3/import/qcqjcwmggp9lzjpt6k8nw788gmhr9zqwhj2vcwqpdfz4gxq6t4p9fv.yaml | kubectl apply -f -
+curl --insecure -sfL https://master:8443/v3/import/qcqjcwmggp9lzjpt6k8nw788gmhr9zqwhj2vcwqpdfz4gxq6t4p9fv.yaml | kubectl apply -f -
 ```
 
 ### Reference
