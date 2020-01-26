@@ -120,22 +120,34 @@ Source: https://qiita.com/Tutorial/items/5ab1ec4ba55396b089f8
 
 ## Establish Connection through SSH Key
 
-* Generate SSH Keys
+* Generate SSH Keys on Master Node
+On Master Node:
 ```bash
 ssh-keygen
 ```
 
-* SSH Copy ID
-```
-ssh-copy-id -f root@192.168.56.100
+* SSH Copy ID from Master Node to Worker Nodes
+On Master Node:
+```bash
+# Use IP address
 ssh-copy-id -f root@192.168.56.101
 ssh-copy-id -f root@192.168.56.102
+
+# Use hostname
+ssh-copy-id -f root@node1
+ssh-copy-id -f root@node2
 ```
 
 * Test Connection from Master to Node1 & Node2
-```
+On Master Node (without password or key):
+```bash
+# Use IP address
 ssh root@192.168.56.101 # node1
 ssh root@192.168.56.102 # node2
+
+# Use hostname
+ssh root@node1
+ssh root@node2
 ```
 
 ## Install Python3 on CentOS 8
