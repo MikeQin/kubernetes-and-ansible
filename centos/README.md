@@ -1,5 +1,11 @@
 # Kubernetes Cluster on CentOS
 
+With Docker 1.13 update, we can easily remove both unwanted containers, dangling images
+
+```bash
+$ docker system df #will show used space, similar to the unix tool df
+$ docker system prune # will remove all unused data.
+```
 ## Kubernetes Reference
 
 * Installing kubeadm, https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
