@@ -167,6 +167,52 @@ node1,192.168.56.101 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbml
 node2,192.168.56.102 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBORukD29jNpwiR58cdeNEee/npjQx/htgtuJbmQ0LRmKeRD+U24X41urHTzDBVBjxqh5+FA8aU5asdnWkKi7m4I=
 ```
 
+## Disable Firewall on CentOS 8
+
+CentOS by default enables firewall.
+
+* You can open firewall ports during configuring the master-node. (See instructions in the other section)
+
+* Alternatively, the firewall on master-node and worker-nodes may be disabled permanently to ensure the route/communication work among nodes in kube cluster.
+
+1) Check the firewall status
+```bash
+sudo firewall-cmd --state
+
+running
+```
+
+2) To permanently disable the firewall on your CentOS system, follow the steps below:
+```bash
+# First, stop the FirewallD service with:
+sudo systemctl stop firewalld
+
+# Disable the FirewallD service to start automatically on system boot:
+sudo systemctl disable firewalld
+
+Removed /etc/systemd/system/multi-user.target.wants/firewalld.service.
+Removed /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.
+
+# Mask the FirewallD service which will prevent the firewall from being started by other services:
+sudo systemctl mask --now firewalld
+
+# As you can see from the output the mask command simply creates a symlink from the firewalld service to /dev/null
+Created symlink /etc/systemd/system/firewalld.service → /dev/null.
+
+# Check the status again
+sudo firewall-cmd --state
+
+not running
+```
+
+To unmask and enable firewalld
+```bash
+sudo systemctl unmask --now firewalld.service
+sudo systemctl enable --now firewalld.service
+sudo systemctl start --now firewalld.service
+sudo systemctl status firewalld.service
+```
+
 ## Install Python3 on CentOS 8
 
 * Better to install with regular user

@@ -36,7 +36,10 @@ sudo systemctl enable docker
 ```
 sudo usermod -aG docker $USER
 
-# Logout and login to verify... without `sudo`
+# Reboot the machine
+reboot
+
+# After reboot, verify `docker` without `sudo`
 docker version
 ```
 
