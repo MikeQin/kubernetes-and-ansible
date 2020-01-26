@@ -120,14 +120,13 @@ Source: https://qiita.com/Tutorial/items/5ab1ec4ba55396b089f8
 
 ## Establish Connection through SSH Key
 
+* Login the Master Node as root user
 * Generate SSH Keys on Master Node
-On Master Node:
 ```bash
 ssh-keygen
 ```
 
 * SSH Copy ID from Master Node to Worker Nodes
-On Master Node:
 ```bash
 # Use IP address
 ssh-copy-id -f root@192.168.56.101
@@ -138,8 +137,7 @@ ssh-copy-id -f root@node1
 ssh-copy-id -f root@node2
 ```
 
-* Test Connection from Master to Node1 & Node2
-On Master Node (without password or key):
+* Test Connection from Master to Node1 & Node2 (without password or key)
 ```bash
 # Use IP address
 ssh root@192.168.56.101 # node1
