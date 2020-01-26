@@ -171,9 +171,7 @@ node2,192.168.56.102 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbml
 
 CentOS by default enables firewall.
 
-* You can open firewall ports during configuring the master-node. (See instructions in the other section)
-
-* Alternatively, the firewall on master-node and worker-nodes may be disabled permanently to ensure the route/communication work among nodes in kube cluster.
+Firewall on master-node and worker-nodes MUST be Disabled Permanently to ensure the route/communication work among nodes in kube cluster.
 
 1) Check the firewall status
 ```bash

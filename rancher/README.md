@@ -66,7 +66,8 @@ kubectl version --short
 * Install Rancher
 
 ```bash
-docker run -d --restart=unless-stopped -p 80:80 -p 443:443 -v /opt/rancher:/var/lib/rancher --name rancher rancher/rancher:latest
+docker run -d --restart=unless-stopped -p 80:80 -p 443:443 -v /opt/rancher:/var/lib/rancher \
+  --name rancher rancher/rancher:latest
 
 # Container name: rancher
 # Persistent volume: /opt/rancher
