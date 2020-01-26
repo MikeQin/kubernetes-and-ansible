@@ -129,12 +129,12 @@ ssh-keygen
 * `ssh-copy-id` from master-node to worker-nodes, which generates an entry on the worker-node `~/.ssh/authorized_keys`
 ```bash
 # Use IP address
-ssh-copy-id -f root@192.168.56.101
-ssh-copy-id -f root@192.168.56.102
+ssh-copy-id root@192.168.56.101
+ssh-copy-id root@192.168.56.102
 
 # OR: Use hostname if you prefer
-ssh-copy-id -f root@node1
-ssh-copy-id -f root@node2
+ssh-copy-id root@node1
+ssh-copy-id root@node2
 ```
 
 On worker-node as a reguler user
