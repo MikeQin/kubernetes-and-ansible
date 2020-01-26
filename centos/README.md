@@ -201,15 +201,24 @@ kubectl get pods --all-namespaces
 
 ### Firewall Check
 
-```
+```bash
 # Check the Master-Node connectivity
 nc -vz 192.168.56.100 6443
 
 # Check iptables
 sudo iptables -nvL
 
+# Status firewall
+sudo systemctl status firewalld
+
 # Restart firewall if necessary
 sudo systemctl restart firewalld
+
+# Stop firewall
+sudo systemctl stop firewalld
+
+# Disable firewall
+sudo systemctl disable firewalld
 ```
 
 ### Joining Your Nodes
