@@ -1,4 +1,0 @@
-Error: Transaction check error:
-  file /usr/share/man/man1/docker-attach.1.gz from install of docker-ce-cli-1:19.03.5-3.el7.x86_64 conflicts with file from package podman-manpages-1.4.2-5.module_el8.1.0+237+63e26edc.noarch
-  file /usr/share/man/man1/docker-build.1.gz from install of docker-ce-cli-1:19.03.5-3.el7.x86_64 conflicts with file from package podman-manpages-1.4.2-5.module_el8.1.0+237+63e26edc.noarch
-  file /usr/share/man/man1/docker-commit.1.gz from install of docker-ce-cli-1:19.03.5-3.el7.x86_64 conflicts with file from package podman-manpages-1.4.2-5.module_el8.1.0+237+63e26edc.noarch

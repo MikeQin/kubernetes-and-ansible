@@ -73,7 +73,7 @@ Visit our Website : https://www.learnitguide.net
 
 * Edit `ifcfg-enp0s3` file as per the following code. (In vi editor, use 'i' for insert, 'esc' key to enter command mode and 'wq' for save and quit)
 
-`vi /etc/sysconfig/network-scripts/ifcfg-enp0s3`
+`vim /etc/sysconfig/network-scripts/ifcfg-enp0s3`
 
 ```properties
 ONBOOT=yes
@@ -81,21 +81,27 @@ USERCTL=no
 ```
 * Edit `ifcfg-enp0s8` file as per the following code. (Note. IPADDR value should be in between Lower Address Bound and Upper Address Bound values)
 
-`vi /etc/sysconfig/network-scripts/ifcfg-enp0s8`
+`vim /etc/sysconfig/network-scripts/ifcfg-enp0s8`
 
 ```properties
 BOOTPROTO=none
 ONBOOT=yes
-IPADDR=192.168.56.141
+IPADDR=192.168.56.3 ## The Lower Address Bound from Host-Only Network
 PREFIX=24
 ```
 * Restart network OR reboot
 ```bash
-systemctl restart network
+systemctl restart NetworkManager
 ```
-```bash
-reboot
+
+* Make entries in `/etc/hosts` for all nodes
 ```
+192.168.56.3   rancher
+192.168.56.100 master
+192.168.56.101 node1
+192.168.56.102 node2
+```
+
 * Test with the ping command, try it in a Windows Command Prompt window (CMD).
 
 ```cmd
