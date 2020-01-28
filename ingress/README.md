@@ -1,17 +1,19 @@
 # Ingress Load Balancer
 
 ### Ingress Controller
-* Namespace
-* Service Account
-* Cluster Role
-* Cluster Role Binding
-* Config Map
-* Secret
-* Daemon Set
+
+- Namespace
+- Service Account
+- Cluster Role
+- Cluster Role Binding
+- Config Map
+- Secret
+- Daemon Set
 
 ### Products
-* Nginx
-* TRAEFIK
+
+- Nginx
+- TRAEFIK
 
 ### Resource
 
@@ -19,13 +21,13 @@ https://github.com/MikeQin/kubernetes-1/tree/master/yamls/ingress-demo
 
 ### Create `haproxy`
 
-* Install `haproxy`
+- Install `haproxy`
 
 ```bash
 sudo yum install -y haproxy
 ```
 
-* Edit configure file
+- Edit configure file
 
 ```bash
 vim /etc/haproxy/haproxy.cfg
@@ -33,7 +35,8 @@ vim /etc/haproxy/haproxy.cfg
 ## Delete everything after global default
 ```
 
-* Append the following to the end of haproxy.cfg
+- Append the following to the end of haproxy.cfg
+
 ```bash
 frontend http_front
   bind *:80
@@ -46,7 +49,8 @@ backend http_back
   server kube <worker-node2-ip>:80
 ```
 
-* Start and enable haproxy service
+- Start and enable haproxy service
+
 ```bash
 systemctl status haproxy
 
@@ -59,7 +63,7 @@ systemctl status haproxy
 
 ### Install Ingress Controller
 
-* Create namespace and service account
+- Create namespace and service account
 
 ```bash
 git clone https://github.com/nginxinc/kubernetes-ingress.git
@@ -69,33 +73,35 @@ cd kubernetes-ingress/deployment
 kubectl create -f common/ns-and-sa.yaml
 ```
 
-* Resource https://docs.nginx.com/nginx-ingress-controller/installation/
+- Resource https://docs.nginx.com/nginx-ingress-controller/installation/
 
-* Create a secret with TLS certificate and a key for the default server in NGINX
+- Create a secret with TLS certificate and a key for the default server in NGINX
+
 ```bash
 kubectl apply -f common/default-server-secret.yaml
 ```
 
-* Create a config map for customizing NGINX configuration
+- Create a config map for customizing NGINX configuration
+
 ```bash
 kubectl apply -f common/nginx-config.yaml
 ```
 
-* Configure RBAC
+- Configure RBAC
 
 ```bash
 kubectl apply -f rbac/rbac.yaml
 ```
 
-* Deploy the Ingress Controller
+- Deploy the Ingress Controller
 
-** Create a daemon set instead of a deployment
+Create a daemon set instead of a deployment
 
 ```bash
 kubectl create -f daemon-set/nginx-ingress.yaml
 ```
 
-* Verify
+- Verify
 
 ```bash
 kubectl get all -n nginx-ingress
@@ -103,7 +109,7 @@ kubectl get all -n nginx-ingress
 
 ### Create App Deployment
 
-* `cd` to this repo directory: `https://github.com/MikeQin/kubernetes-1/tree/master/yamls/ingress-demo`
+- `cd` to this repo directory: `https://github.com/MikeQin/kubernetes-1/tree/master/yamls/ingress-demo`
 
 ```bash
 # Create deployment
