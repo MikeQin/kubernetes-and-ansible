@@ -6,13 +6,15 @@ With Docker 1.13 update, we can easily remove both unwanted containers, dangling
 $ docker system df #will show used space, similar to the unix tool df
 $ docker system prune # will remove all unused data.
 ```
+
 ## Kubernetes Reference
 
-* Installing kubeadm, https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
-* Creating a single control-plane cluster with kubeadm, https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
-* How to Install a Kubernetes Cluster on CentOS 8 , https://www.tecmint.com/install-a-kubernetes-cluster-on-centos-8/
-  
+- Installing kubeadm, https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+- Creating a single control-plane cluster with kubeadm, https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
+- How to Install a Kubernetes Cluster on CentOS 8 , https://www.tecmint.com/install-a-kubernetes-cluster-on-centos-8/
+
 ## Install Docker CE
+
 - SET UP THE REPOSITORY
 
 ```
@@ -25,6 +27,7 @@ sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/dock
 ```
 
 - INSTALL DOCKER ENGINE - COMMUNITY
+
 ```
 ## To solve podman-manpages conflict, remove podman-manpages
 sudo yum remove -y podman-manpages
@@ -39,6 +42,7 @@ sudo systemctl enable docker
 ```
 
 - Manage Docker as a non-root user
+
 ```
 sudo usermod -aG docker $USER
 
@@ -53,14 +57,16 @@ docker version
 
 ### Before Begin
 
-1) Disable Swap
+1. Disable Swap
+
 ```
 sudo vim /etc/fstab
 ```
 
-2) Verify the MAC address and product_uuid
+2. Verify the MAC address and product_uuid
 
 MAC address
+
 ```
 ip link
 
@@ -70,11 +76,12 @@ ifconfig -a
 ```
 
 product_uuid
+
 ```
 sudo cat /sys/class/dmi/id/product_uuid
 ```
 
-3) Check `iptables` Tooling (does not use the nftables backend)
+3. Check `iptables` Tooling (does not use the nftables backend)
 
 ```
 update-alternatives --set iptables /usr/sbin/iptables-legacy
@@ -90,6 +97,7 @@ yum clean all
 ```
 
 Install:
+
 ```
 cat <<EOF > /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
@@ -128,6 +136,7 @@ systemctl enable --now kubelet
 ```
 
 You should ensure `net.bridge.bridge-nf-call-iptables` is set to 1 in your `sysctl` config, e.g.
+
 ```
 cat <<EOF > /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-ip6tables = 1
@@ -136,8 +145,9 @@ EOF
 sysctl --system
 ```
 
-Make sure that the `br_netfilter` module is loaded before this step. 
+Make sure that the `br_netfilter` module is loaded before this step.
 This can be done by running:
+
 ```
 lsmod | grep br_netfilter
 modprobe br_netfilter
@@ -152,13 +162,13 @@ systemctl restart kubelet
 
 ### Install a single control-plane Kubernetes cluster
 
-* Prepare: Pull images
+- Prepare: Pull images
 
 ```
 kubeadm config images pull
 ```
 
-* Initialize the control-plane node
+- Initialize the control-plane node
 
 ```
 kubeadm init <args>
@@ -167,36 +177,44 @@ kubeadm init --apiserver-advertise-address=192.168.56.100 \
   --pod-network-cidr=10.244.0.0/16
 ```
 
-* To make kubectl work for your non-root user
+- To make kubectl work for your non-root user
+
 ```
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
+
 Alternatively, if you are the root user, you can run:
+
 ```
 export KUBECONFIG=/etc/kubernetes/admin.conf
 ```
 
-* Make a record of the kubeadm join command that kubeadm init outputs.
+- Make a record of the kubeadm join command that kubeadm init outputs.
 
 ### Install a Pod network on the cluster
 
-* Set `/proc/sys/net/bridge/bridge-nf-call-iptables` to 1 by running:
+- Set `/proc/sys/net/bridge/bridge-nf-call-iptables` to 1 by running:
+
 ```
 sudo sysctl net.bridge.bridge-nf-call-iptables=1
 ```
 
-* Install Flannel
+- Install Flannel
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134e0ed5af15c65e414cf26827915/Documentation/kube-flannel.yml
 ```
 
-* Once a Pod network has been installed, confirm it working by checking CoreDNS Pod is running.
+- Once a Pod network has been installed, confirm it working by checking CoreDNS Pod is running.
 
 ```
 kubectl get pods --all-namespaces
+
+kubectl get all --all-namespaces
+
+watch kubectl get all --all-namespaces
 ```
 
 ### Firewall Check
@@ -223,9 +241,9 @@ sudo systemctl disable firewalld
 
 ### Joining Your Nodes
 
-* SSH to the machine
-* Become root (e.g. sudo su)
-* Run the command that was output by kubeadm init. For example:
+- SSH to the machine
+- Become root (e.g. sudo su)
+- Run the command that was output by kubeadm init. For example:
 
 ```
 systemctl enable kubelet.service
@@ -238,12 +256,14 @@ kubeadm join 192.168.56.100:6443 --token nndczt.nbvkmh27dymisw8r \
     --discovery-token-ca-cert-hash sha256:a9d3e839d7aa6633b4f0b13b8aeeb9ca34f1a4d0ae454bf243b4de7913052f1d
 ```
 
-* Verify as a regular user on Master-Node, not the root
+- Verify as a regular user on Master-Node, not the root
+
 ```
 kubectl get nodes
 ```
 
 Results:
+
 ```
 NAME     STATUS   ROLES    AGE    VERSION
 master   Ready    master   106m   v1.17.2
