@@ -162,6 +162,8 @@ systemctl restart kubelet
 
 ### Install a single control-plane Kubernetes cluster
 
+- As a `root` user
+
 - Prepare: Pull images
 
 ```
@@ -173,7 +175,8 @@ kubeadm config images pull
 ```
 kubeadm init <args>
 
-kubeadm init --apiserver-advertise-address=192.168.56.100 \
+# As a `root` user
+kubeadm init --apiserver-advertise-address=192.168.56.5 \
   --pod-network-cidr=10.244.0.0/16
 ```
 
@@ -192,6 +195,11 @@ export KUBECONFIG=/etc/kubernetes/admin.conf
 ```
 
 - Make a record of the kubeadm join command that kubeadm init outputs.
+
+```
+kubeadm join 192.168.56.5:6443 --token 8hkrdi.zcr9csj07ttt0uax \
+    --discovery-token-ca-cert-hash sha256:a43305699788919f6871e074f176bc3503a4b17e8875ccd52cba498ec266eba9
+```
 
 ### Install a Pod network on the cluster
 
@@ -221,7 +229,7 @@ watch kubectl get all --all-namespaces
 
 ```bash
 # Check the Master-Node connectivity
-nc -vz 192.168.56.100 6443
+nc -vz 192.168.56.5 6443
 
 # Check iptables
 sudo iptables -nvL
@@ -236,7 +244,7 @@ sudo systemctl restart firewalld
 sudo systemctl stop firewalld
 
 # Disable firewall
-sudo systemctl disable firewalld
+sudo systemctl disable firewallddocker
 ```
 
 ### Joining Your Nodes
