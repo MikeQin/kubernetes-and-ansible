@@ -4,12 +4,12 @@
 
 * Master (control plance + etcd)
 ```
-docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.3.5 --server https://192.168.56.3 --token 5hvwlv48ln9hjnrr7rpc57jhb22zl724k66h725cc9m5fqps2qb8wq --ca-checksum 11f3e4610a229904f3cabed94f5ada07917d54ee485c2ae88498696b99852d56 --etcd --controlplane
+docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.3.5 --server https://192.168.56.3 --token csr587g9tdffr4cr5nwlbrl5fzglxzgtzzq2nsbwgztfrmhw8mchsg --ca-checksum 11f3e4610a229904f3cabed94f5ada07917d54ee485c2ae88498696b99852d56 --etcd --controlplane
 ```
 
 * Workers
 ```
-sudo docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.3.5 --server https://192.168.56.3 --token 9sfbbkjbbvmxkq865t2vvftrvwvg2f65hxnlqptqxf5m7j5jf7rg8z --ca-checksum 11f3e4610a229904f3cabed94f5ada07917d54ee485c2ae88498696b99852d56 --worker
+docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.3.5 --server https://192.168.56.3 --token csr587g9tdffr4cr5nwlbrl5fzglxzgtzzq2nsbwgztfrmhw8mchsg --ca-checksum 11f3e4610a229904f3cabed94f5ada07917d54ee485c2ae88498696b99852d56 --worker
 ```c
 
 ### kubeadm reset

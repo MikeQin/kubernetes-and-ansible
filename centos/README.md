@@ -124,6 +124,20 @@ sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 # firewall-cmd --permanent --add-port=10255/tcp
 # firewall-cmd –-reload
 
+# Add the port
+# vi /etc/services
+service-name  port/protocol  [aliases ...]   [# comment]
+testport        55555/tcp   # Application Name
+
+kubelet 6443/tcp
+kube-master 2379/tcp
+kube-master 2380/tcp
+kube-master 10250/tcp
+kube-master 10251/tcp:
+kube-master 10252/tcp
+kube-master 10255/tcp
+```
+
 # Make sure the value is 1
 cat /proc/sys/net/bridge/bridge-nf-call-iptables
 # Make sure the value is 1, otherwise:
