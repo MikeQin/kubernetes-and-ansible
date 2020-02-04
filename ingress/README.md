@@ -49,7 +49,7 @@ backend http_back
   server kube2 <worker-node2-ip>:80
 ```
 
-Another real version
+- Another version: haproxy.cfg
 
 ```bash
 frontend http-in
@@ -88,7 +88,13 @@ cd kubernetes-ingress/deployment
 kubectl create -f common/ns-and-sa.yaml
 ```
 
-- Resource https://docs.nginx.com/nginx-ingress-controller/installation/
+- Resources:
+
+Installation Doc, https://docs.nginx.com/nginx-ingress-controller/installation/
+
+Set up Nginx Ingress in Kubernetes Bare Metal, https://youtu.be/chwofyGr80c
+
+Kubernetes Ingress Explained Completely For Beginners, https://youtu.be/VicH6KojwCI
 
 - Create a secret with TLS certificate and a key for the default server in NGINX
 
