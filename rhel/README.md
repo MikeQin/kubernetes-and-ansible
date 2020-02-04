@@ -73,14 +73,14 @@ sudo systemctl enable docker
 ### Grant Permission: Add current user to 'docker' group
 
 ```
-sudo usermod -aG docker \$USER
+sudo usermod -aG docker $USER
 ```
 
 OR: Modify `sudo vim /etc/group`,
 and add user to the end of 'docker' group
 
 ```
-docker:x:993:\$USER
+docker:x:993:$USER
 ```
 
 #### References
