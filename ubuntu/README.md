@@ -2,7 +2,7 @@
 
 ## Install Docker
 
-### SET UP THE REPOSITORY
+### Set up the repository
 ```bash
 
 # Update the apt package index:
@@ -30,7 +30,7 @@ sudo add-apt-repository \
    stable"
 ```
 
-### INSTALL DOCKER ENGINE - COMMUNITY
+### Install Docker Engine - Community
 
 ```bash
 # Update the apt package index.
@@ -42,7 +42,7 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 # Verify that Docker Engine - Community is installed correctly by running the hello-world image.
 sudo docker run hello-world
 ```
-e
+
 ## Post-installation steps for Linux
 
 ### Manage Docker as a non-root user
@@ -83,7 +83,13 @@ sudo vi /etc/fstab
 
 ## Network Interfaces
 
-### Host-Only Network - enp0s3
+`/etc/netplan`
+
+### NAT - enp0s3
+
+Ubuntu Server IP address: 10.0.2.15 -- no change
+
+### Host-Only Network - enp0s8
 
 ```bash
 # Edit /etc/hostname
@@ -93,10 +99,6 @@ sudo vi /etc/fstab
 192.168.56.6 kubenode1
 192.168.56.7 kubenode2
 ```
-
-### NAT - enp0s8
-
-Ubuntu Server IP address: 10.0.2.15 -- no change
 
 ## Clone the `base` VM
 
@@ -111,9 +113,11 @@ kubenode2
 
 ## Configure Ubuntu Server Static IP Address for all 3 nodes
 
+https://hadisinaee.github.io/posts/setting-up-vbox6/
+
 To configure a static IP address on your Ubuntu 18.04 server you need to modify a relevant netplan network configuration file within `/etc/netplan/` directory.
 
-* Open `/etc/netplan/01-host-only.yaml`
+* Create `/etc/netplan/01-host-only.yaml`
 ```yaml
 network:
   version: 2
@@ -127,16 +131,19 @@ network:
         addresses: [192.168.1.1, 8.8.8.8, 8.8.4.4]
 ```
 
+* Save the file and apply your changes:
+
 ```bash
-$ sudo netplan generate
-$ sudo netplan apply
+sudo netplan generate
+sudo netplan apply
 ```
 
-* Apply `sudo netplan apply` OR `sudo netplan --debug apply`
+* Now you can see your changes via `ip a`
 
 * Edit `sudo vim /etc/hostname`
 
 * Edit `sudo vim /etc/hosts` with the following contents
+
 ```properties
 192.168.56.5 kubemaster
 192.168.56.6 kubenode1
