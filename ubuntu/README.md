@@ -6,7 +6,7 @@
 ```bash
 
 # Update the apt package index:
-sudo apt-get update
+sudo apt-get -y update
 
 # Install packages to allow apt to use a repository over HTTPS:
 sudo apt-get install -y \
@@ -42,7 +42,7 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 # Verify that Docker Engine - Community is installed correctly by running the hello-world image.
 sudo docker run hello-world
 ```
-
+e
 ## Post-installation steps for Linux
 
 ### Manage Docker as a non-root user
@@ -57,16 +57,21 @@ docker run hello-world
 docker version
 ```
 
-### Configure Docker to start on bootip
+### Configure Docker to start on boot (Optional)
+By default, it's enabled
 
 ```bash
+# Status first, by default, it's enabled
+sudo systemctl status docker
+
 # systemd
 sudo systemctl enable docker
-# Status
-sudo systemctl status docker
 ```
 
-## Disable Swap
+## Disable Swap (Optional)
+
+By default, it uses all disk space. No swap.
+
 ```bash
 # Before You Begin
 sudo swapon --show
@@ -84,14 +89,14 @@ sudo vi /etc/fstab
 # Edit /etc/hostname
 
 # Edit /etc/hosts
-192.168.56.12 kubemaster
-192.168.56.13 kubenode1
-192.168.56.14 kubenode2
+192.168.56.5 kubemaster
+192.168.56.6 kubenode1
+192.168.56.7 kubenode2
 ```
 
 ### NAT - enp0s8
 
-Ubuntu Server IP address: 10.0.3.15 -- no change
+Ubuntu Server IP address: 10.0.2.15 -- no change
 
 ## Clone the `base` VM
 
@@ -108,19 +113,25 @@ kubenode2
 
 To configure a static IP address on your Ubuntu 18.04 server you need to modify a relevant netplan network configuration file within `/etc/netplan/` directory.
 
-* Open `/etc/netplan/50-cloud-init.yaml`
+* Open `/etc/netplan/01-host-only.yaml`
 ```yaml
 network:
   version: 2
   renderer: networkd
   ethernets:
-    enp0s3:
-     dhcp4: no
-     addresses: [192.168.56.5/24]
-     gateway4: 192.168.56.1
-     nameservers:
-       addresses: [8.8.8.8,8.8.4.4]
+    enp0s8: # this is your interface name for your NAT network
+      dhcp4: no
+      addresses: [192.168.56.5/24]
+      gateway4: 192.168.1.1
+      nameservers:
+        addresses: [192.168.1.1, 8.8.8.8, 8.8.4.4]
 ```
+
+```bash
+$ sudo netplan generate
+$ sudo netplan apply
+```
+
 * Apply `sudo netplan apply` OR `sudo netplan --debug apply`
 
 * Edit `sudo vim /etc/hostname`
@@ -164,8 +175,8 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDLTxS6D1d1f0CX/wEI0vVqjxGoNXkTzWvHLofmULt0
 
 ```bash
 # Use IP address
-ssh root@192.168.56.101 # node1
-ssh root@192.168.56.102 # node2
+ssh root@192.168.56.6 # node1
+ssh root@192.168.56.7 # node2
 
 # Use hostname
 ssh root@node1
@@ -176,6 +187,9 @@ On master-node
 
 ```bash
 $ cat ~/.ssh/known_hosts
-node1,192.168.56.101 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBORukD29jNpwiR58cdeNEee/npjQx/htgtuJbmQ0LRmKeRD+U24X41urHTzDBVBjxqh5+FA8aU5asdnWkKi7m4I=
-node2,192.168.56.102 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBORukD29jNpwiR58cdeNEee/npjQx/htgtuJbmQ0LRmKeRD+U24X41urHTzDBVBjxqh5+FA8aU5asdnWkKi7m4I=
+node1,192.168.56.6 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBORukD29jNpwiR58cdeNEee/npjQx/htgtuJbmQ0LRmKeRD+U24X41urHTzDBVBjxqh5+FA8aU5asdnWkKi7m4I=
+node2,192.168.56.7 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBORukD29jNpwiR58cdeNEee/npjQx/htgtuJbmQ0LRmKeRD+U24X41urHTzDBVBjxqh5+FA8aU5asdnWkKi7m4I=
 ```
+
+## Install `kubeadm, kubectl, kubelet` on `kubemaster` node
+
