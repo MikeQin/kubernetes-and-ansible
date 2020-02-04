@@ -30,7 +30,7 @@ sudo yum install -y haproxy
 - Edit configure file
 
 ```bash
-vim /etc/haproxy/haproxy.cfg
+sudo vim /etc/haproxy/haproxy.cfg
 
 ## Delete everything after global default
 ```
@@ -45,20 +45,35 @@ frontend http_front
 
 backend http_back
   balance roundrobin
-  server kube <worker-node1-ip>:80
-  server kube <worker-node2-ip>:80
+  server kube1 <worker-node1-ip>:80
+  server kube2 <worker-node2-ip>:80
+```
+
+Another real version
+
+```bash
+frontend http-in
+  bind *:80
+  stats uri /haproxy?stats
+  default_backend servers
+
+backend servers
+  balance roundrobin
+  server h0006415 10.157.163.245:80 maxconn 32
+  server h0006416 10.157.163.252:80 maxconn 32
+  server h0006417 10.157.163.228:80 maxconn 32
 ```
 
 - Start and enable haproxy service
 
 ```bash
-systemctl status haproxy
+sudo systemctl status haproxy
 
-systemctl enable haproxy
+sudo systemctl enable haproxy
 
-systemctl start haproxy
+sudo systemctl start haproxy
 
-systemctl status haproxy
+sudo systemctl status haproxy
 ```
 
 ### Install Ingress Controller
