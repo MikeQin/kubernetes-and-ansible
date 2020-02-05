@@ -13,7 +13,14 @@ By the end of this course, you should be able to:
 - Use PersistentVolumeClaims for state persistence.
 
 ## Course Resources
+
 Resources for this course can be found online. Making updates to this course takes time. Therefore, if there are any changes in between updates, you can always access course updates, as well as the course resources online:
 
 Go to the Linux Foundation training website to obtain [Course Resources](https://training.linuxfoundation.org/cm/LFD259/)
-The user ID is LFtraining and the password is Penguin2014. 
+The user ID is LFtraining and the password is Penguin2014.
+
+## Lab 2
+
+```bash
+wget https://training.linuxfoundation.org/cm/LFD259/LFD259V2020-02-03SOLUTIONS.tar.bz2 --user=LFtraining --password=Penguin2014 --no-check-certificate
+```
