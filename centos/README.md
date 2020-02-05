@@ -263,12 +263,12 @@ sudo systemctl disable firewallddocker
 
 ### Joining Your Nodes
 
-- SSH to the machine
+- SSH to the node1 or node2 machine
 - Become root (e.g. sudo su)
 - Run the command that was output by kubeadm init. For example:
 
-```
-systemctl enable kubelet.service
+```bash
+#systemctl enable kubelet.service
 
 # General format
 kubeadm join --token <token> <control-plane-host>:<control-plane-port> --discovery-token-ca-cert-hash sha256:<hash>
@@ -280,13 +280,13 @@ kubeadm join 192.168.56.100:6443 --token nndczt.nbvkmh27dymisw8r \
 
 - Verify as a regular user on Master-Node, not the root
 
-```
+```bash
 kubectl get nodes
 ```
 
 Results:
 
-```
+```bash
 NAME     STATUS   ROLES    AGE    VERSION
 master   Ready    master   106m   v1.17.2
 node1    Ready    <none>   15m    v1.17.1
