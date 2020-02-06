@@ -200,3 +200,22 @@ node2,192.168.56.7 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzd
 
 ## Install `kubeadm, kubectl, kubelet` on `kubemaster` node
 
+[install-kubernetes](install-kubernetes.md)
+
+# Troubleshooting
+
+## The connection to the server <host>:6443 was refused - did you specify the right host or port?
+```bash
+# Check status
+sudo swapon --show
+
+# Solve the problem
+sudo -i
+swapoff -a
+exit
+# Optional
+strace -eopenat kubectl version
+
+# Now you can
+kubectl get nodes
+```
