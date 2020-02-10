@@ -156,7 +156,7 @@ sudo netplan apply
 - Generate ssh keys `ssh-keygen` on the master-node
 
 ```bash
-ssh-keygen
+ssh-keygen -t rsa
 ```
 
 - `ssh-copy-id` from master-node to worker-nodes, which generates an entry on the worker-node `~/.ssh/authorized_keys`

@@ -37,10 +37,10 @@ default via 10.0.2.2 dev enp0s3 proto dhcp src 10.0.2.15 metric 100
 sudo apt-get install -y iptables arptables ebtables
 
 # switch to legacy versions
-sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
-sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
-sudo update-alternatives --set arptables /usr/sbin/arptables-legacy
-sudo update-alternatives --set ebtables /usr/sbin/ebtables-legacy
+# sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
+# sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+# sudo update-alternatives --set arptables /usr/sbin/arptables-legacy
+# sudo update-alternatives --set ebtables /usr/sbin/ebtables-legacy
 ```
 
 ## Installing `kubeadm, kubelet and kubectl` on All Nodes
@@ -58,10 +58,13 @@ sudo apt-mark hold kubelet kubeadm kubectl
 # Creating a single control-plane cluster with kubeadm
 
 ```bash
-apt-get update && apt-get upgrade
+sudo apt-get update && sudo apt-get upgrade
 ```
 
 ## Initialize on Master Node Only
+
+Run as root user
+
 ```bash
 # kubeadm config images pull
 
@@ -113,11 +116,38 @@ kubectl get nodes
 The nodes are where your workloads (containers and Pods, etc) run. To add new nodes to your cluster do the following for each machine:
 
 * SSH to the machine (node1 & node2)
-* Become root (e.g. sudo su -)
+* Become root (e.g. sudo su - or sudo -i)
 * Run the command that was output by kubeadm init. For example:
+
+Before re-joining the Master node only
+
+```bash
+sudo -i
+
+kubeadm reset -f
+```
+
+Optional, check see if these are still there. If so, remove them:
+```bash
+# $ sudo rm /etc/kubernetes/kubelet.conf
+# $ sudo rm /etc/kubernetes/pki/ca.crt
+
+# $ netstat -lnp | grep 1025
+
+# tcp6       0      0 :::10251                :::*                    LISTEN      4366/kube-scheduler
+# tcp6       0      0 :::10252                :::*                    LISTEN      4353/kube-controlle
+
+# $ kill 4366
+# $ kill 4353
+```
+
+Then, join:
 
 ```bash
 kubeadm join --token <token> <control-plane-host>:<control-plane-port> --discovery-token-ca-cert-hash sha256:<hash>
+
+kubeadm join 192.168.56.5:6443 --token 4wcjlj.55e6d18hcm5w2wtb \
+    --discovery-token-ca-cert-hash sha256:394e63670f18c14d230ea506d3e96cd17442e846c65b5f1aa0f2e892c8912a75
 ```
 
 Verify
