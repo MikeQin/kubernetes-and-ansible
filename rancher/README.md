@@ -50,6 +50,7 @@ To install and run Rancher, execute the following Docker command on your host:
 
 ```bash
 sudo mkdir /opt/rancher
+sudo chmod 755 /opt/rancher
 ```
 
 - Make copy of `.kube/config` from Kubernetes cluster's master-node
@@ -76,7 +77,9 @@ kubectl version --short
 
 ```bash
 docker run -d --restart=unless-stopped -p 80:80 -p 443:443 -v /opt/rancher:/var/lib/rancher \
-  --name rancher rancher/rancher:latest
+  --name rancher rancher/rancher:v2.4.0-alpha1
+# rancher/rancher:v2.4.0-alpha1
+# rancher/rancher:latest
 
 # Container name: rancher
 # Persistent volume: /opt/rancher
