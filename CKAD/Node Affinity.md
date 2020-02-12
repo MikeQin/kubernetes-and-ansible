@@ -12,7 +12,7 @@ spec:
       requiredDuringSchedulingIgnoredDuringExecution:
         # preferredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
-          - matchExpression:
+          - matchExpressions:
               - key: size
                 operator: In # NotIn | In | Exists
                 values:
