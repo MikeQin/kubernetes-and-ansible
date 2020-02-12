@@ -1,4 +1,4 @@
-# Security Context
+# SecurityContext
 
 ```yaml
 apiVersion: v1

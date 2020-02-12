@@ -160,7 +160,7 @@ kubectl get deploy
 kubectl expose deployment webapp --type=NodePort --port=8080 --name=webapp-service --dry-run -o yaml > webapp-service.yaml
 ```
 
-webapp-service.yaml
+- webapp-service.yaml
 
 ```yaml
 apiVersion: v1

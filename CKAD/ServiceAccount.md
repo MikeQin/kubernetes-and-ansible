@@ -1,4 +1,4 @@
-# Service Account
+# ServiceAccount
 
 ```bash
 kubectl create serviceaccount dashboard-sa
