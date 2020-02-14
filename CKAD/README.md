@@ -1,5 +1,22 @@
 # CKAD Certification
 
+## Kubernetes Challenges
+
+- Repository: kodekloudhub/kubernetes-challenges
+- github: https://github.com/kodekloudhub/kubernetes-challenge-1-wordpress
+- Student Video: https://youtu.be/rnemKrveZks
+
+Use Shortcuts / Aliases
+- po for PODS
+- rs for ReplicaSets
+- deploy for Deployments
+- svc for Services
+- ns for Namespaces
+- netpol for NetworkPolicies
+- pv for PersistVolumes
+- pvc for PersistentVolumeClaims
+- sa for ServiceAccounts
+
 ### ReplicaSet
 
 ```bash
