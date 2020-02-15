@@ -53,8 +53,12 @@ https://kubernetes.io/docs/reference/kubectl/conventions/
 
 #### Create an NGINX Pod
 
-```
+```bash
+# create Pod only
 kubectl run --generator=run-pod/v1 nginx --image=nginx
+
+# create Deploy & Pod
+kubectl run nginx --image=nginx
 ```
 
 #### Generate POD Manifest YAML file (-o yaml). Don't create it(--dry-run)

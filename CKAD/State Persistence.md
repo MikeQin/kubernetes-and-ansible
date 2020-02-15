@@ -57,7 +57,7 @@ kubectl get persistentvolume | pv
 # Binding
 
 # In PV
-labels
+labels:
   name: my-pv
 
 ---
