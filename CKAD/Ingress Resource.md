@@ -1,12 +1,27 @@
 # Ingress Resource
 
-Must be created in `app-space`, not in `ingress-space`
+Must be created in `app-space` or `default`, not in `ingress-space`
+
+### Commands
 
 ```bash
-kubectl create namespace app-space
+kubectl create -f ingress-wear.yaml
+
+kubectl get ingress
+kubectl get ingress -n app-space
+kubectl get ingress --all-namespaces
+
+kubectl edit ingress test-ingress
+kubectl describe ingress test-ingress
 ```
 
-Examples:
+```bash
+kubectl describe ingress ingress-wear-watch
+
+kubectl edit ingress --namespace app-space
+```
+
+### YAML Examples
 
 ```yaml
 apiVersion: networking.k8s.io/v1beta1
@@ -44,6 +59,51 @@ spec:
         backend:
           serviceName: service2
           servicePort: 8080
+
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: name-virtual-host-ingress
+spec:
+  rules:
+  - host: foo.bar.com
+    http:
+      paths:
+      - backend:
+          serviceName: service1
+          servicePort: 80
+  - host: bar.foo.com
+    http:
+      paths:
+      - backend:
+          serviceName: service2
+          servicePort: 80
+
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: name-virtual-host-ingress
+spec:
+  rules:
+  - host: first.bar.com
+    http:
+      paths:
+      - backend:
+          serviceName: service1
+          servicePort: 80
+  - host: second.foo.com
+    http:
+      paths:
+      - backend:
+          serviceName: service2
+          servicePort: 80
+  - http:
+      paths:
+      - backend:
+          serviceName: service3
+          servicePort: 80
 ```
 
 ```yaml
@@ -66,6 +126,8 @@ spec:
           servicePort: 30093   
 ```
 
+### Single Service Ingress
+
 Configure `ingress-wear.yaml`
 
 ```yaml
@@ -82,6 +144,8 @@ spec:
     serviceName: wear-service
     servicePort: 80
 ```
+
+### Simple Fanout
 
 Ingress Resource: `ingress-wear-watch.yml`
 
@@ -108,65 +172,7 @@ spec:
           servicePort: 8080
 ```
 
-```bash
-kubectl get ingress -n app-space
-```
-
-```bash
-kubectl create -f ingress-wear.yaml
-
-kubectl get ingress
-
-kubectl get ingress --all-namespaces
-```
-
-```yaml
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: ingress-wear-watch
-  namespace: app-space
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/ssl-redirect: "false" 
-spec:
-  rules:
-  - http:
-      paths:
-      - path: /wear
-        backend:
-          serviceName: wear-service
-          servicePort: 80
-      - path: /watch
-        backend:
-          serviceName: watch-service
-          servicePort: 80
----
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: test-ingress
-  namespace: critical-space
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-spec:
-  rules:
-  - http:
-      paths:
-      - path: /pay
-        backend:
-          serviceName: pay-service
-          servicePort: 8282
-```
-
-```bash
-kubectl describe ingress ingress-wear-watch
-
-kubectl edit ingress --namespace app-space
-```
-
-Host Route
+### Name Based Virtual Hosting
 
 ```yaml
 apiVersion: networking.k8s.io/v1beta1
@@ -190,7 +196,7 @@ spec:
           servicePort: 80
 ```
 
-#### `rewrite-target` Option
+### `rewrite-target` Option
 
 For example: `replace(path, rewrite-target)`
 
