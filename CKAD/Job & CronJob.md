@@ -3,7 +3,10 @@
 ### RestartPolicy
 
 ```yaml
+apiVersion: v1
 kind: Pod
+metadata:
+  name: math-add
 spec:
   containers:
   - name: math-add
@@ -15,6 +18,38 @@ spec:
 ### Job
 
 #### `job-definition.yml`
+
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: whalesay
+spec:
+  completions: 10
+  parallelism: 3
+  backoffLimit: 6
+  template:  
+    spec:
+      containers:
+      - name: whalesay
+        image: docker/whalesay
+        command: ["cowsay", "I am going to ace CKAD!"]
+      restartPolicy: Never
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi
+spec:
+  template:
+    spec:
+      containers:
+      - name: pi
+        image: perl
+        command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+      restartPolicy: Never
+  backoffLimit: 4
+```
 
 ```yaml
 apiVersion: batch/v1

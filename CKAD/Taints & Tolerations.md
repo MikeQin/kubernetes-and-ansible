@@ -6,6 +6,24 @@
 kubectl taint nodes node-name key=value:taint-effect
 
 kubectl taint nodes node1 app=blue:NoSchedule
+
+kubectl taint nodes node01 app_type=alpha:NoSchedule
+```
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: alpha
+spec:  
+  containers:
+    - name: redis      
+      image: redis
+  tolerations:
+    - key: "app_type"
+      operator: "Equal"      
+      value: "alpha"
+      effect: "NoSchedule"
 ```
 
 taint-effect:
@@ -23,9 +41,11 @@ kubectl taint nodes node1 app=blue:NoSchedule
 ```yaml
 apiVersion: v1
 kind: Pod
+metadata:
+  name: nginx
 spec:
   containers:
-    - name: nginx-container
+    - name: nginx
       image: nginx
   tolerations:
     - key: "app"

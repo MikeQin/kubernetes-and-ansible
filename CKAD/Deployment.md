@@ -3,7 +3,9 @@
 Generate Deployment YAML file (-o yaml). Don't create it(--dry-run) with 4 Replicas (--replicas=4)
 
 ```bash
-kubectl create deployment --image=nginx nginx --dry-run -o yaml > nginx-deployment.yaml
+kubectl create deployment --image=nginx my-webapp --dry-run -o yaml > my-webapp.yaml
+
+kubectl expose deployment my-webapp --type=NodePort --port=80 --name=front-end-service --dry-run -o yaml > front-end-service.yaml
 ```
 
 ```bash

@@ -4,6 +4,22 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
+  name: custom-volume
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 50Mi
+  hostPath:
+    path: /opt/data
+  # Retain (default) | Delete | Recycle
+  persistentVolumeReclaimPolicy: Retain
+```
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
   name: pv-vol1
 spec:
   accessModes:
