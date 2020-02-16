@@ -1,3 +1,6 @@
+# PersistentVolume
+
+```yaml
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -50,3 +53,5 @@ spec:
     server: nfs01
     # Exported path of your NFS server
     path: "/mysql"
+
+```

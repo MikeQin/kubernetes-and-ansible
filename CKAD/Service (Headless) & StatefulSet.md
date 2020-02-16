@@ -14,7 +14,9 @@ spec:
   - port: 3306
   selector:
     app: mysql
+  # Headerless: clusterIP=None
   clusterIP: None
+  ###########################
 ```
 
 - pod-definition.yml
@@ -31,23 +33,25 @@ spec:
   - name: mysql
     image: mysql
   
-  # New
+  # Only in Pod, None in StatefulSet
   subdomain: mysql-h # Match service name above
   hostname: mysql-pod
+  ###########################
 ```
 
 - statefulset-definition.yml
 
 ```yaml
 apiVersion: apps/v1
-kind: StatefulSet
+kind: StatefulSet # Like a Deployment
 metadata:
-  name: mysql-deployment
+  name: mysql-statefulset
   labels:
     app: mysql
 spec:
   # Use headless service name
   serviceName: mysql-h
+  ###########################
   replicas: 3
   matchLabels:
     app: mysql

@@ -5,7 +5,7 @@ kubectl create configmap
   <<config-name>> --from-literal=<key>=<value>
 
 kubectl create configmap
-  app-config --from-literal=APP_COLOR=blue
+  app-config --from-literal=APP_COLOR=blue \
              --from-literal=APP_MODE=prod
 
 kubectl create configmap
@@ -23,8 +23,8 @@ kind: ConfigMap
 metadata:
   name: app-config
 data:
-  APP_COLOR: blue
-  APP_MODE: prod
+  APP_COLOR: "blue"
+  APP_MODE: "prod"
 ```
 
 ```

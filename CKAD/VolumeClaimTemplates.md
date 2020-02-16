@@ -6,7 +6,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mysql-deployment
+  name: mysql-statefulset
   labels:
     app: mysql
 spec:

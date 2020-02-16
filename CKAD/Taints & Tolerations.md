@@ -2,8 +2,10 @@
 
 ## Taints - Node
 
-```
+```bash
 kubectl taint nodes node-name key=value:taint-effect
+
+kubectl taint nodes node1 app=blue:NoSchedule
 ```
 
 taint-effect:
@@ -12,7 +14,7 @@ taint-effect:
 - PreferNoSchedule
 - NoExecute
 
-```
+```bash
 kubectl taint nodes node1 app=blue:NoSchedule
 ```
 
@@ -34,6 +36,6 @@ spec:
 
 ## Master Node is Tainted
 
-```
+```bash
 kubectl describe node kubemaster | grep Taint
 ```

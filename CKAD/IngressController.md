@@ -1,4 +1,4 @@
-# Service & Networking
+# IngressController
 
 ## Service
 
