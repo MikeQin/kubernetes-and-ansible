@@ -108,15 +108,21 @@ spec:
 
 Create a new Ingress Resource for the service: `my-video-service` to be made available at the URL: http://ckad-mock-exam-solution.com:30093/video
 
+Check VERSION
+```bash
+kubectl explain ingress --recursive | grep VERSION
+
+VERSION: extensions/v1beta1
+```
+
 ```yaml
-apiVersion: networking.k8s.io/v1beta1
+# networking.k8s.io/v1beta1
+apiVersion: extensions/v1beta1 # extensions/v1beta1
 kind: Ingress
 metadata:
-  name: my-video-ingress
-  namespace: default
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    # nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  name: my-ingress
+  #annotations:
+  #  nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: ckad-mock-exam-solution.com

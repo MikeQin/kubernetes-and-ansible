@@ -69,5 +69,4 @@ spec:
     server: nfs01
     # Exported path of your NFS server
     path: "/mysql"
-
 ```

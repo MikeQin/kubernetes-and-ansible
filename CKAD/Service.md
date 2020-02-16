@@ -1,5 +1,13 @@
 # Service
 
+Examples:
+
+```bash
+kubectl expose deployment my-webapp --name=front-end-service --type=NodePort --target-port=80 --port=80 --dry-run -o yaml > front-end-service.yml
+
+# Then, edit front-end-service.yml to add nodePort: 30083
+```
+
 - webapp-service.yaml
 
 ```bash

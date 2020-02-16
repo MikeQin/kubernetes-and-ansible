@@ -1,5 +1,13 @@
 # Deployment
 
+Examples
+
+```bash
+kubectl run beta-apps --image=nginx --replicas=3 --dry-run -o yaml > beta.yml
+
+vi beta.yml
+```
+
 Generate Deployment YAML file (-o yaml). Don't create it(--dry-run) with 4 Replicas (--replicas=4)
 
 ```bash

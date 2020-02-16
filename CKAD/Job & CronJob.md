@@ -15,15 +15,24 @@ spec:
   restartPolicy: Never # Always
 ```
 
-### Job
+### Job Creation
 
-#### `job-definition.yml`
-
-Create a job called `whalesay` with image `docker/whalesay` and command "cowsay I am going to ace CKAD!".
+Example: Create a job called `whalesay` with image `docker/whalesay` and command "cowsay I am going to ace CKAD!".
 
 - completions: 10
 - backoffLimit: 6
 - restartPolicy: Never
+
+```bash
+kubectl create job --image=docker/whalesay whalesay --dry-run -o yaml > whalesay.yml
+
+vi whalesay.yml
+
+kubectl create -f whalesay.yml
+
+kubectl get jobs
+kubectl describe job whalesay
+```
 
 ```yaml
 apiVersion: batch/v1
@@ -39,10 +48,12 @@ spec:
       containers:
       - name: whalesay
         image: docker/whalesay
-        command: ["cowsay I am going to ace CKAD!"]
-        #args: ["cowsay I am going to ace CKAD!"]
+        command: ["cowsay"]
+        args: ["I am going to ace CKAD!"]
       restartPolicy: Never
----
+```
+
+```yaml
 apiVersion: batch/v1
 kind: Job
 metadata:

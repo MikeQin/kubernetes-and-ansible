@@ -1,5 +1,11 @@
 # Pod
 
+Examples
+
+```bash
+kubectl run my-webapp --image=nginx --labels='tier=frontend' --replicas=2
+```
+
 Generate POD Manifest YAML file (-o yaml). Don't create it(--dry-run)
 
 ```bash

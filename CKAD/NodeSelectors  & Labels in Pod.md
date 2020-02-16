@@ -6,6 +6,9 @@
 kubectl label nodes <node-name> <label-key>=<label-value>
 
 kubectl label nodes node1 size=Large
+
+kubectl label nodes node02 app_type=beta
+kubectl get nodes node02 --show-labels
 ```
 
 ```yaml

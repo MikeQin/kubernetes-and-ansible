@@ -8,6 +8,14 @@ kubectl exec -it app cat /log/app.log
 
 ### Multi-Container Pods
 
+```bash
+# Create the first container Pod first
+kubectl run --generator=run-pod/v1 multi-pod --image=nginx --dry-run -o yaml > multi-pod.yml
+
+# Add second container to the Pod
+vi multi-pod.yml
+```
+
 ```yaml
 apiVersion: v1
 kind: Pod
