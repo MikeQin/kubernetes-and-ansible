@@ -1,5 +1,13 @@
 # Pod
 
+Generate POD Manifest YAML file (-o yaml). Don't create it(--dry-run)
+
+```bash
+kubectl run --generator=run-pod/v1 nginx --image=nginx --dry-run -o yaml > nginx-pod-definition.yml
+
+kubectl run --generator=run-pod/v1 webapp --image=kodekloud/webapp-color --replicas=3
+```
+
 ```yaml
 apiVersion: v1
 kind: Pod

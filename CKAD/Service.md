@@ -6,6 +6,12 @@
 kubectl expose deployment redis --port=6379 --name messaging-service --namespace marketing
 ```
 
+```bash
+kubectl expose pod redis --port=6379 --name redis-service
+
+kubectl run --generator=run-pod/v1 webapp --image=kodekloud/webapp-color --replicas=3
+```
+
 ```yaml
 apiVersion: v1
 kind: Service

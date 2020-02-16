@@ -1,5 +1,22 @@
 # Deployment
 
+Generate Deployment YAML file (-o yaml). Don't create it(--dry-run) with 4 Replicas (--replicas=4)
+
+```bash
+kubectl create deployment --image=nginx nginx --dry-run -o yaml > nginx-deployment.yaml
+```
+
+```bash
+kubectl create deployment webapp --image=kodekloud/webapp-color
+
+kubectl scale deployment/webapp --replicas=3
+kubectl scale --replicas=3 deploy webapp
+
+kubectl get deploy
+
+kubectl expose deployment webapp --type=NodePort --port=8080 --name=webapp-service --dry-run -o yaml > webapp-service.yaml
+```
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
