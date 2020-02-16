@@ -19,6 +19,12 @@ spec:
 
 #### `job-definition.yml`
 
+Create a job called `whalesay` with image `docker/whalesay` and command "cowsay I am going to ace CKAD!".
+
+- completions: 10
+- backoffLimit: 6
+- restartPolicy: Never
+
 ```yaml
 apiVersion: batch/v1
 kind: Job
@@ -26,14 +32,15 @@ metadata:
   name: whalesay
 spec:
   completions: 10
-  parallelism: 3
+  #parallelism: 3
   backoffLimit: 6
   template:  
     spec:
       containers:
       - name: whalesay
         image: docker/whalesay
-        command: ["cowsay", "I am going to ace CKAD!"]
+        command: ["cowsay I am going to ace CKAD!"]
+        #args: ["cowsay I am going to ace CKAD!"]
       restartPolicy: Never
 ---
 apiVersion: batch/v1

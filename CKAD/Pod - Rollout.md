@@ -47,7 +47,13 @@ kubectl rollout status deploy myapp-deployment
 ```bash
 kubectl apply -f deploy-def.yml
 
-# Temporary
+# Set Image
+# kubectl set image POD/POD_NAME CONTAINER_NAME=IMAGE_NAME:TAG
+kubectl set image pod/nginx nginx=nginx:1.7.1
+# you will see an event 'Container will be killed and recreated'
+kubectl describe po nginx 
+kubectl get po nginx -w # watch it
+
 kubectl set image deploy myapp-deployment nginx-container=nginx:1.9.1
 kubectl set image deploy frontend simple-webapp=kodekloud/webapp-color:v3
 ```

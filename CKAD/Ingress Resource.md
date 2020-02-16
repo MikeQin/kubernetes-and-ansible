@@ -106,11 +106,13 @@ spec:
           servicePort: 80
 ```
 
+Create a new Ingress Resource for the service: `my-video-service` to be made available at the URL: http://ckad-mock-exam-solution.com:30093/video
+
 ```yaml
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: my-ingress
+  name: my-video-ingress
   namespace: default
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
@@ -123,7 +125,8 @@ spec:
       - path: /video
         backend:
           serviceName: my-video-service
-          servicePort: 30093   
+          # Service Port
+          servicePort: 8080
 ```
 
 ### Single Service Ingress
