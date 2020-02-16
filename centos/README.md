@@ -91,14 +91,14 @@ update-alternatives --set iptables /usr/sbin/iptables-legacy
 
 - Run as `root`
 
-```
+```bash
 yum update
 yum clean all
 ```
 
 Install:
 
-```
+```bash
 cat <<EOF > /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
@@ -133,11 +133,12 @@ kubelet 6443/tcp
 kube-master 2379/tcp
 kube-master 2380/tcp
 kube-master 10250/tcp
-kube-master 10251/tcp:
+kube-master 10251/tcp
 kube-master 10252/tcp
 kube-master 10255/tcp
 ```
 
+```bash
 # Make sure the value is 1
 cat /proc/sys/net/bridge/bridge-nf-call-iptables
 # Make sure the value is 1, otherwise:
@@ -151,7 +152,7 @@ systemctl enable --now kubelet
 
 You should ensure `net.bridge.bridge-nf-call-iptables` is set to 1 in your `sysctl` config, e.g.
 
-```
+```bash
 cat <<EOF > /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
@@ -162,12 +163,12 @@ sysctl --system
 Make sure that the `br_netfilter` module is loaded before this step.
 This can be done by running:
 
-```
+```bash
 lsmod | grep br_netfilter
 modprobe br_netfilter
 ```
 
-```
+```bash
 systemctl daemon-reload
 systemctl restart kubelet
 ```
@@ -180,13 +181,13 @@ systemctl restart kubelet
 
 - Prepare: Pull images
 
-```
+```bash
 kubeadm config images pull
 ```
 
 - Initialize the control-plane node
 
-```
+```bash
 kubeadm init <args>
 
 # As a `root` user
@@ -196,7 +197,7 @@ kubeadm init --apiserver-advertise-address=192.168.56.5 \
 
 - To make kubectl work for your non-root user
 
-```
+```bash
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
@@ -204,13 +205,13 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 Alternatively, if you are the root user, you can run:
 
-```
+```bash
 export KUBECONFIG=/etc/kubernetes/admin.conf
 ```
 
 - Make a record of the kubeadm join command that kubeadm init outputs.
 
-```
+```bash
 kubeadm join 192.168.56.5:6443 --token 8hkrdi.zcr9csj07ttt0uax \
     --discovery-token-ca-cert-hash sha256:a43305699788919f6871e074f176bc3503a4b17e8875ccd52cba498ec266eba9
 ```
@@ -219,19 +220,19 @@ kubeadm join 192.168.56.5:6443 --token 8hkrdi.zcr9csj07ttt0uax \
 
 - Set `/proc/sys/net/bridge/bridge-nf-call-iptables` to 1 by running:
 
-```
+```bash
 sudo sysctl net.bridge.bridge-nf-call-iptables=1
 ```
 
 - Install Flannel
 
-```
+```bash
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134e0ed5af15c65e414cf26827915/Documentation/kube-flannel.yml
 ```
 
 - Once a Pod network has been installed, confirm it working by checking CoreDNS Pod is running.
 
-```
+```bash
 kubectl get pods --all-namespaces
 
 kubectl get all --all-namespaces
