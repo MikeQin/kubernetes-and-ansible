@@ -1,17 +1,17 @@
 # ConfigMap
 
-```
-kubectl create configmap
-  <<config-name>> --from-literal=<key>=<value>
+```bash
+kubectl create configmap \
+  <config-name> --from-literal=<key>=<value>
 
-kubectl create configmap
+kubectl create configmap \
   app-config --from-literal=APP_COLOR=blue \
              --from-literal=APP_MODE=prod
 
-kubectl create configmap
-  <<config-name>> --from-file=<path-to-file>
+kubectl create configmap \
+  <config-name> --from-file=<path-to-file>
 
-kubectl create configmap
+kubectl create configmap \
   app-config --from-file=app_config.properties
 ```
 
