@@ -1,5 +1,9 @@
 # CKAD Certification
 
+## `kubectl` Cheat Sheet
+
+https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+
 ## Kubernetes Challenges
 
 - Repository: kodekloudhub/kubernetes-challenges
