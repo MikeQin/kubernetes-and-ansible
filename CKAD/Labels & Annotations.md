@@ -95,6 +95,32 @@ Remove these pods to have a clean state in your cluster
 kubectl delete po nginx{1..3}
 ```
 
+## Labels, Selectors & Annotations
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app
+  labels:
+    app: App1
+    function: Front-end
+  annotations:
+    buildVersion: 1.34
+spec:
+  containers:
+  - name: app
+    image: app
+    ports:
+      - containerPort: 8080
+```
+
+```bash
+kubectl get pods --selector app=App1
+
+kubectl get pods --selector bu-finance --selector tier=frontend --selector env=prod
+```
+
 ## Label Nodes
 
 ```

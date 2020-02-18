@@ -1,30 +1,4 @@
-# Pod Design
-
-## Labels, Selectors & Annotations
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: app
-  labels:
-    app: App1
-    function: Front-end
-  annotations:
-    buildVersion: 1.34
-spec:
-  containers:
-  - name: app
-    image: app
-    ports:
-      - containerPort: 8080
-```
-
-```bash
-kubectl get pods --selector app=App1
-
-kubectl get pods --selector bu-finance --selector tier=frontend --selector env=prod
-```
+# Pod Design - Deployment Rollout
 
 ## Rolling Update & Rollback in Deployment
 
@@ -33,7 +7,13 @@ Strategies:
 - RollingUpdate (default)
 
 ```yaml
+apiVersion: apps/v1
 kind: Deployment
+metadata:
+  name: myapp-deployment
+  labels:
+    app: myapp
+    type: front-end
 spec:
   strategy:
     type: Recreate # Default: RollingUpdate
