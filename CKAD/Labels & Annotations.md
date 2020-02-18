@@ -2,10 +2,18 @@
 
 ## Pod Labels
 
+```bash
+kubectl get pods --selector app=App1
+# OR
+kubectl get pods -l app=App1
+
+kubectl get pods --selector bu-finance --selector tier=frontend --selector env=prod
+```
+
 Show all labels of the pods
 
 ```
-kubectl get po --show-labels
+kubectl get pods --show-labels
 ```
 
 Change the labels of pod 'nginx2' to be app=v2

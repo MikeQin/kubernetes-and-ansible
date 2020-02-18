@@ -12,7 +12,7 @@ spec:
   - name: math-add
     image: ubuntu
     command: ["expr", "1", "+", "2"]
-  restartPolicy: Never # Always
+  restartPolicy: Never # default: Always
 ```
 
 ### Job Creation
@@ -24,7 +24,7 @@ Example: Create a job called `whalesay` with image `docker/whalesay` and command
 - restartPolicy: Never
 
 ```bash
-kubectl create job --image=docker/whalesay whalesay --dry-run -o yaml > whalesay.yml
+kubectl create job whalesay --image=docker/whalesay --dry-run -o yaml > whalesay.yml
 
 vi whalesay.yml
 
@@ -34,23 +34,10 @@ kubectl get jobs
 kubectl describe job whalesay
 ```
 
-```yaml
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: whalesay
-spec:
-  completions: 10
-  #parallelism: 3
-  backoffLimit: 6
-  template:  
-    spec:
-      containers:
-      - name: whalesay
-        image: docker/whalesay
-        command: ["cowsay"]
-        args: ["I am going to ace CKAD!"]
-      restartPolicy: Never
+Create a job with image perl that runs the command with arguments "perl -Mbignum=bpi -wle 'print bpi(2000)'"
+
+```bash
+kubectl create job pi --image=perl -- perl -Mbignum=bpi -wle 'print bpi(2000)'
 ```
 
 ```yaml
@@ -65,8 +52,37 @@ spec:
       - name: pi
         image: perl
         command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
-      restartPolicy: Never
+      restartPolicy: Never # OnFailure
   backoffLimit: 4
+```
+
+Create a job with the image busybox that executes the command 'echo hello;sleep 30;echo world'
+
+```bash
+kubectl create job busybox --image=busybox -- /bin/sh -c 'echo hello;sleep 30;echo world'
+
+# Delete a job
+kubectl delete job busybox
+```
+
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: whalesay
+spec:
+  activeDeadlineSeconds: 30 # automatically terminated by kubernetes if it takes more than 30 seconds to execute
+  completions: 10
+  parallelism: 3
+  backoffLimit: 6
+  template:  
+    spec:
+      containers:
+      - name: whalesay
+        image: docker/whalesay
+        command: ["cowsay"]
+        args: ["I am going to ace CKAD!"]
+      restartPolicy: Never # OnFailure
 ```
 
 ```yaml
@@ -75,6 +91,7 @@ kind: Job
 metadata:
   name: math-add-job
 spec:
+  activeDeadlineSeconds: 30 # automatically terminated by kubernetes if it takes more than 30 seconds to execute
   completions: 3 # Multiple Pods
   parallelism: 3
   template:  
@@ -83,7 +100,7 @@ spec:
       - name: math-add
         image: ubuntu
         command: ["expr", "1", "+", "2"]
-      restartPolicy: Never # Always 
+      restartPolicy: Never # Always | OnFailure
   backoffLimit: 4
 ```
 
@@ -97,6 +114,7 @@ There are situations where you want to fail a Job after some amount of retries d
 kubectl create -f job-definition.yml
 
 kubectl get jobs
+kubectl get job busybox -w # will take two and a half minutes
 
 # Get output
 kubectl logs math-add-job-ld87pn
@@ -110,6 +128,23 @@ kubectl describe job throw-dice-job
 ```
 
 ## CronJob
+
+```bash
+kubectl create cronjob busybox --image=busybox --schedule="*/1 * * * *" -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster'
+
+# See its logs and delete it
+kubectl get cj
+kubectl get jobs --watch
+kubectl get po --show-labels # observe that the pods have a label that mentions their 'parent' job
+kubectl logs busybox-1529745840-m867r
+# Bear in mind that Kubernetes will run a new job/pod for each new cron job
+kubectl delete cj busybox
+
+# Create from a file
+kubectl create -f cron-job-definition.yml
+# Get
+kubectl get cronjobs
+```
 
 - cron-job-definition.yml
 
@@ -129,11 +164,5 @@ spec:
           containers:
           - name: reporting-tool
             image: reporting-tool
-          restartPolicy: Never # Always 
-```
-
-```bash
-kubectl create -f cron-job-definition.yml
-
-kubectl get cronjobs
+          restartPolicy: Never # Always | OnFailure
 ```
