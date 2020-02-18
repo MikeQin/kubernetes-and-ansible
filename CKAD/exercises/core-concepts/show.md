@@ -19,7 +19,7 @@ cat pod.yaml
 - Create a busybox pod (using kubectl command) that runs the command "env". Run it and see the output
 
 ```bash
-kubectl run busybox --image=busybox --command -- env
+kubectl run busybox --image=busybox --restart=Never --command -- env
 
 kubectl logs busybox
 ```
@@ -27,7 +27,7 @@ kubectl logs busybox
 - Create a busybox pod (using YAML) that runs the command "env". Run it and see the output
 
 ```bash
-kubectl run busybox --image=busybox --dry-run -o yaml --command -- env > envpod.yaml
+kubectl run busybox --image=busybox --restart=Never --dry-run -o yaml --command -- env > envpod.yaml
 
 cat envpod.yaml
 ```
@@ -53,7 +53,7 @@ kubectl get pods --all-namespaces
 - Create a pod with image nginx called nginx and allow traffic on port 80
 
 ```bash
-kubectl run nginx --image=nginx --port=80
+kubectl run nginx --image=nginx --restart=Never --port=80
 ```
 
 - Change pod's image to nginx:1.7.1. Observe that the pod will be killed and recreated as soon as the image gets pulled

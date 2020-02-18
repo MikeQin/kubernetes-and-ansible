@@ -3,9 +3,14 @@
 ### Tips
 
 - Set `alias k=kubectl`
-- Copy to notepad:
+- Copy common commands to notepad:
+
 ```bash
+# set-context
 k config set-context mycontext --namespace=default | anynamespace
+
+# explain
+kubectl explain cronjob.spec.jobTemplate --recursive
 ```
 
 ### Object Creation
