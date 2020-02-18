@@ -52,7 +52,7 @@ spec:
       - name: pi
         image: perl
         command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
-      restartPolicy: Never # OnFailure
+      restartPolicy: OnFailure
   backoffLimit: 4
 ```
 
@@ -82,7 +82,7 @@ spec:
         image: docker/whalesay
         command: ["cowsay"]
         args: ["I am going to ace CKAD!"]
-      restartPolicy: Never # OnFailure
+      restartPolicy: OnFailure
 ```
 
 ```yaml
@@ -100,7 +100,7 @@ spec:
       - name: math-add
         image: ubuntu
         command: ["expr", "1", "+", "2"]
-      restartPolicy: Never # Always | OnFailure
+      restartPolicy: OnFailure
   backoffLimit: 4
 ```
 
@@ -164,5 +164,5 @@ spec:
           containers:
           - name: reporting-tool
             image: reporting-tool
-          restartPolicy: Never # Always | OnFailure
+          restartPolicy: OnFailure
 ```

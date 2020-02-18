@@ -1,8 +1,20 @@
 # CKAD Certification
 
-## `kubectl` Cheat Sheet
+## Before Exam
 
+- `kubectl` Cheat Sheet: 
 https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+- `kubectl` commands: https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands
+
+Student Video: https://youtu.be/rnemKrveZks
+
+Tips:
+- Set `alias k=kubectl`
+- Copy to notepad:
+```
+k config set-context mycontext --namespace=default | anynamespace
+```
+- Time management
 
 ## Kubernetes Challenges
 
