@@ -1,5 +1,13 @@
 # Environment
 
+Create an nginx pod and set an env value as 'var1=val1'. Check the env value existence within the pod
+
+```bash
+kubectl run nginx --image=nginx --restart=Never --env=var1=val1
+
+kubectl exec -it nginx -- env
+```
+
 ```yaml
 apiVersion: v1
 kind: Pod

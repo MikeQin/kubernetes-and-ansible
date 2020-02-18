@@ -18,7 +18,7 @@ cat pod.yaml
 
 - Create a busybox pod (using kubectl command) that runs the command "env". Run it and see the output
 
-```
+```bash
 kubectl run busybox --image=busybox --command -- env
 
 kubectl logs busybox
@@ -26,7 +26,7 @@ kubectl logs busybox
 
 - Create a busybox pod (using YAML) that runs the command "env". Run it and see the output
 
-```
+```bash
 kubectl run busybox --image=busybox --dry-run -o yaml --command -- env > envpod.yaml
 
 cat envpod.yaml
@@ -34,25 +34,25 @@ cat envpod.yaml
 
 - Get the YAML for a new namespace called 'myns' without creating it
 
-```
+```bash
 kubectl create namespace myns --dry-run -o yaml
 ```
 
 - Get the YAML for a new ResourceQuota called 'myrq' with hard limits of 1 CPU, 1G memory and 2 pods without creating it
 
-```
+```bash
 kubectl create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run -o yaml
 ```
 
 - Get pods on all namespaces
 
-```
+```bash
 kubectl get pods --all-namespaces
 ```
 
 - Create a pod with image nginx called nginx and allow traffic on port 80
 
-```
+```bash
 kubectl run nginx --image=nginx --port=80
 ```
 
@@ -87,19 +87,19 @@ kubectl describe po nginx
 
 - Get pod logs
 
-```
+```bash
 kubectl logs nginx
 ```
 
 - If pod crashed and restarted, get logs about the previous instance
 
-```
+```bash
 kubectl logs nginx -p
 ```
 
 - Execute a simple shell on the nginx pod
 
-```
+```bash
 kubectl exec -it nginx -- /bin/sh
 ```
 
@@ -111,13 +111,13 @@ kubectl run busybox --image=busybox -it --restart=Never -- echo "hello world"
 
 - Do the same, but have the pod deleted automatically when it's completed
 
-```
+```bash
 kubectl run busybox --image=busybox --rm -it --restart=Never -- echo "hello world"
 ```
 
 - Create an nginx pod and set an env value as 'var1=val1'. Check the env value existence within the pod
 
-```
+```bash
 kubectl run nginx --image=nginx --restart=Never --env=var1=val1
 
 kubectl exec -it nginx -- env
