@@ -3,6 +3,13 @@
 Examples
 
 ```bash
+kubectl run nginx --image=nginx --restart=Never --port=80 --namespace=myns \
+ --command --serviceaccount=mysa --env=HOSTNAME=local --labels=bu=finance,env=dev \
+ --requests='cpu=100m,memory=256Mi' --limits='cpu=200m,memory=512Mi' --dry-run -o yaml \
+ -- /bin/sh -c 'echo hello world' > pod.yaml
+```
+
+```bash
 kubectl run my-webapp --image=nginx --labels='tier=frontend' --replicas=2
 ```
 

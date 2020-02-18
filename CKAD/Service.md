@@ -3,6 +3,23 @@
 Examples:
 
 ```bash
+# Deployment
+kubectl run frontend --image=busybox --replicas=2 --labels=run=load-balancer-example \
+ --port=8080 # --dry-run -o yaml > frontend-deployment.yaml
+
+# Service: NodePort
+kubectl expose deployment frontend --type=NodePort --name=frontend-service \
+ --port=6262 --target-port=8080 --dry-run -o yaml
+
+# Service: ClusterIP
+kubectl create service clusterip myservice --tcp=5678:8080 \
+ --dry-run -o yaml > myservice.yaml
+
+# Attach serviceaccount to an existing deployment
+kubectl set serviceaccount deployment frontend myuser
+```
+
+```bash
 kubectl expose deployment my-webapp --name=front-end-service --type=NodePort --target-port=80 --port=80 --dry-run -o yaml > front-end-service.yml
 
 # Then, edit front-end-service.yml to add nodePort: 30083
