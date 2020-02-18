@@ -6,8 +6,15 @@
 - Copy common commands to notepad:
 
 ```bash
+alias k='kubectl'
+alias kg='kubectl get'
+alias kd='kubectl describe'
+alias ke='kubectl explain'
+```
+
+```bash
 # set-context
-k config set-context mycontext --namespace=default | anynamespace
+kubectl config set-context mycontext --namespace=default | anynamespace
 
 # explain
 kubectl explain cronjob.spec.jobTemplate --recursive
