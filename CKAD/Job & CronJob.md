@@ -1,19 +1,9 @@
 ## Jobs
 
-### RestartPolicy
+### Job.RestartPolicy
 
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: math-add
-spec:
-  containers:
-  - name: math-add
-    image: ubuntu
-    command: ["expr", "1", "+", "2"]
-  restartPolicy: Never # default: Always
-```
+- OnFailure (default)
+- Never
 
 ### Job Creation
 
