@@ -81,25 +81,25 @@ spec:
     spec:
       serviceAccountName: nginx-ingress-serviceaccount
       containers:
-      - name: nginx-ingress-controller
-        image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.21.0
-        args:
-          - /nginx-ingress-controller
-          - --configmap=$(POD_NAMESPACE)/nginx-configuration
-        env:
-          - name: POD_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-          - name: POD_NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.namespace
-        ports:
-          - name: http
-            containerPort: 80:
-          - name: https
-            containerPort: 443
+        - name: nginx-ingress-controller
+          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.21.0
+          args:
+            - /nginx-ingress-controller
+            - --configmap=$(POD_NAMESPACE)/nginx-configuration
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          ports:
+            - name: http
+              containerPort: 80
+            - name: https
+              containerPort: 443
 ---
 # ConfigMap
 apiVersion: v1
@@ -117,14 +117,14 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - port: 80
-    targetPort: 80
-    protocol: TCP
-    name: http
-  - port: 443
-    targetPort: 443
-    protocol: TCP
-    name: https
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
+    - port: 443
+      targetPort: 443
+      protocol: TCP
+      name: https
   selector:
     name: nginx-ingress
 ---
@@ -198,15 +198,15 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - port: 80
-    targetPort: 80
-    protocol: TCP
-    nodePort: 30080
-    name: http
-  - port: 443
-    targetPort: 443
-    protocol: TCP
-    name: https
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      nodePort: 30080
+      name: http
+    - port: 443
+      targetPort: 443
+      protocol: TCP
+      name: https
   selector:
     name: nginx-ingress
 ```
