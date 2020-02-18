@@ -2,15 +2,19 @@
 
 ### Tips
 
-- Set `alias k=kubectl`
-- Copy common commands to notepad:
+- Set `alias`
 
 ```bash
+alias ll='ls -laF'
 alias k='kubectl'
 alias kg='kubectl get'
 alias kd='kubectl describe'
 alias ke='kubectl explain'
+alias kr='kubectl run'
+alias kc='kubectl create'
 ```
+
+- Copy common commands to notepad:
 
 ```bash
 # set-context
