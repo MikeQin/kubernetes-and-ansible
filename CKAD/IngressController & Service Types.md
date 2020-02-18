@@ -150,7 +150,7 @@ kubectl get roles, rolebindings --namespace ingress-space
 `IngressController` Deployment Example:
 
 ```yaml
-# IngressController
+# Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -189,7 +189,7 @@ spec:
             - name: https
               containerPort: 443
 ---
-# Ingress Resource
+# Service
 apiVersion: v1
 kind: Service
 metadata:
