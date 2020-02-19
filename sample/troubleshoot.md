@@ -2,6 +2,16 @@
 
 ### Master
 
+- "The connection to the server localhost:8080 was refused"
+
+```bash
+sudo cp /etc/kubernetes/admin.conf $HOME/.kube
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+export KUBECONFIG=$HOME/.kube/config
+```
+
+- General
+
 ```bash
 # Describe
 kubectl describe pod pod-name
