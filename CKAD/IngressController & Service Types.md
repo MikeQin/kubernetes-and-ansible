@@ -79,7 +79,7 @@ spec:
       labels:
         name: nginx-ingress
     spec:
-      serviceAccountName: nginx-ingress-serviceaccount
+      serviceAccountName: ingress-serviceaccount
       containers:
         - name: nginx-ingress-controller
           image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.21.0
@@ -133,7 +133,7 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: nginx-ingress-serviceaccount
+  name: ingress-serviceaccount
   namespace: ingress-space
 ```
 
