@@ -1,5 +1,36 @@
 # Kubernetes & Ansible
 
+### Alias
+
+```bash
+alias ll='ls -laFG'
+alias k='kubectl'
+alias kg='kubectl get'
+alias kd='kubectl describe'
+alias kc='kubectl create'
+alias ka='kubectl apply'
+alias ke='kubectl explain'
+alias kr='kubectl run'
+```
+
+### Install `kubectl` client on Mac
+
+https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-macos
+
+```bash
+# Latest version
+curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl"
+
+# for version 1.15.5
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.5/bin/darwin/amd64/kubectl
+
+chmod +x ./kubectl
+
+sudo mv ./kubectl /usr/local/bin/kubectl
+
+kubectl version --client
+```
+
 This repository has set of ansible playbooks created to setup a kubernetes cluster fully automated with one master and multiple worker nodes. This will work on physical servers, virtual machines, aws cloud, google cloud or any other cloud servers. This has been tested and verified on Centos 7.3 64 bit operating systems. Also you can refer this link for manual configuration https://www.learnitguide.net/2018/08/install-and-configure-kubernetes-cluster.html
 
 How to use this (Setup Instructions):
