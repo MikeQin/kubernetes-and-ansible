@@ -42,7 +42,7 @@ kubectl version --client
 kubectl version --short
 ```
 
-### Install Rancher
+### Before Installing Rancher
 
 To install and run Rancher, execute the following Docker command on your host:
 
@@ -73,7 +73,7 @@ kubectl get nodes
 kubectl version --short
 ```
 
-#### Install Rancher
+### Install Rancher
 
 ```bash
 docker run -d --restart=unless-stopped -p 80:80 -p 443:443 -v /opt/rancher:/var/lib/rancher \
@@ -85,7 +85,26 @@ docker run -d --restart=unless-stopped -p 80:80 -p 443:443 -v /opt/rancher:/var/
 # Persistent volume: /opt/rancher
 ```
 
-- Check logs for errors
+#### Initialize `server-url`
+
+For Rancher in VirtualBox, set `server-url` to Rancher Server's static IP address: 192.168.56.3 (for example)
+
+#### Reset admin password
+
+```bash
+$ docker exec -ti <container_id> reset-password
+New password for default administrator (user-xxxxx):
+<new_password>
+
+# Execute
+docker exec -ti ec437235159b reset-password
+
+# Output
+New password for default administrator (user-xxxxx):
+t3JtbLuvr9Ths-pHVp3S
+```
+
+#### Check logs for errors
 
 ```bash
 docker logs -f rancher
@@ -125,7 +144,7 @@ kubectl -n cattle-system get pods -l app=cattle-cluster-agent -o wide
 kubectl -n cattle-system logs -l app=cattle-cluster-agent
 ```
 
-### Add Cluster - Import
+### Add Cluster - Import (from existing cluster) | Custom (preferred)
 
 - Run the kubectl command below on an existing Kubernetes cluster running a supported Kubernetes version to import it into Rancher:
 
