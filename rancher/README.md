@@ -87,7 +87,7 @@ docker run -d --restart=unless-stopped -p 80:80 -p 443:443 -v /opt/rancher:/var/
 
 #### Initialize `server-url`
 
-For Rancher in VirtualBox, set `server-url` to Rancher Server's static IP address: 192.168.56.3 (for example)
+For Rancher in VirtualBox, set `server-url` to Rancher Server's static IP address: 192.168.56.3 (for example). Rancher `server-url` in local VirtualBox must be static IP address in order to support the networking.
 
 #### Reset admin password
 
