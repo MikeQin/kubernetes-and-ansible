@@ -58,6 +58,7 @@ docker version
 ```
 
 ### Configure Docker to start on boot (Optional)
+
 By default, it's enabled
 
 ```bash
@@ -68,9 +69,7 @@ sudo systemctl status docker
 sudo systemctl enable docker
 ```
 
-## Disable Swap (Optional)
-
-By default, it uses all disk space. No swap.
+## Disable Swap
 
 ```bash
 # Before You Begin
@@ -79,25 +78,31 @@ sudo swapon --show
 
 sudo vi /etc/fstab
 # Comment out Swap
+
+# Turn off swap
+sudo swapoff -a
+
+# sudo reboot
 ```
 
 ## Network Interfaces
 
 `/etc/netplan`
 
-### NAT - enp0s3
+### Network -> Bridged Adapter - `enp0s3`
 
-Ubuntu Server IP address: 10.0.2.15 -- no change
+To set Static Leases: Go to Home Router to set Static Leases for the Node
 
-### Host-Only Network - enp0s8
+### Network -> Host-Only Adapter - `enp0s8`
 
 ```bash
 # Edit /etc/hostname
+master
 
 # Edit /etc/hosts
-192.168.56.5 kubemaster
-192.168.56.6 kubenode1
-192.168.56.7 kubenode2
+192.168.56.5 master
+192.168.56.6 node1
+192.168.56.7 node2
 ```
 
 ## Clone the `base` VM
@@ -106,9 +111,9 @@ Ubuntu Server IP address: 10.0.2.15 -- no change
 - Generate new MAC addresses for all network adapters
 
 ```
-kubemaster
-kubenode1
-kubenode2
+master
+node1
+node2
 ```
 
 ## Configure Ubuntu Server Static IP Address for all 3 nodes
@@ -129,12 +134,6 @@ network:
       gateway4: 192.168.1.1
       nameservers:
         addresses: [192.168.1.1, 8.8.8.8, 8.8.4.4]
-    # enp0s3: # Not necessary if static ip lease configured
-    #   dhcp4: no
-    #   addresses: [192.168.1.204/24]
-    #   gateway4: 192.168.1.1
-    #   nameservers:
-    #     addresses: [192.168.1.1, 8.8.8.8, 8.8.4.4]
 ```
 
 * Save the file and apply your changes:
@@ -151,9 +150,9 @@ sudo netplan apply
 * Edit `sudo vim /etc/hosts` with the following contents
 
 ```properties
-192.168.56.5 kubemaster
-192.168.56.6 kubenode1
-192.168.56.7 kubenode2
+192.168.56.5 master
+192.168.56.6 node1
+192.168.56.7 node2
 ```
 
 ## Establish Connection through SSH Key
