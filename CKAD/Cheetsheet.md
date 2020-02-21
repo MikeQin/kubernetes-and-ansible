@@ -12,6 +12,7 @@ alias kd='kubectl describe'
 alias ke='kubectl explain'
 alias kr='kubectl run'
 alias kc='kubectl create'
+alias ka='kubectl apply'
 ```
 
 - Copy common commands to notepad:
@@ -20,8 +21,12 @@ alias kc='kubectl create'
 # set-context
 kubectl config set-context mycontext --namespace=default | anynamespace
 
+kubectl config set-context --current --namespace=default | anynamespace
+
 # explain
 kubectl explain cronjob.spec.jobTemplate --recursive
+kubectl explain job.spec.template.spec --recursive
+kubectl explain pod.spec --recursive
 ```
 
 ### Object Creation
