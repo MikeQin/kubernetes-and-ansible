@@ -123,12 +123,18 @@ network:
   version: 2
   renderer: networkd
   ethernets:
-    enp0s8: # this is your interface name for your NAT network
+    enp0s8: # host-only adapter
       dhcp4: no
       addresses: [192.168.56.5/24]
       gateway4: 192.168.1.1
       nameservers:
         addresses: [192.168.1.1, 8.8.8.8, 8.8.4.4]
+    # enp0s3: # Not necessary if static ip lease configured
+    #   dhcp4: no
+    #   addresses: [192.168.1.204/24]
+    #   gateway4: 192.168.1.1
+    #   nameservers:
+    #     addresses: [192.168.1.1, 8.8.8.8, 8.8.4.4]
 ```
 
 * Save the file and apply your changes:
