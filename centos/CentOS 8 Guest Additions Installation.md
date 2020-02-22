@@ -9,11 +9,16 @@ To get full screen with CentOS 8 Workstation:
 
 * In CentOS terminal, run:
 ```bash
-sudo yum update
+sudo yum update --nobest
 sudo yum install -y gcc
 sudo yum install -y make perl
 sudo yum install -y kernel-devel-$(uname -r)
 sudo yum install -y elfutils-libelf-devel
+```
+
+After each kernal update, re-run:
+```bash
+sudo yum install -y kernel-devel-$(uname -r)
 ```
 
 * Go to VirtualBox menu: Devices -> `Insert Guest Additions CD image`
