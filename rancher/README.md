@@ -16,6 +16,8 @@ sudo systemctl status firewalld
 
 - Install Guide, https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-linux
 
+#### CentOS
+
 ```bash
 # As a root user first
 sudo su
@@ -33,6 +35,27 @@ EOF
 
 # Install
 yum install -y kubectl
+
+# Exit root
+exit
+
+# Test to ensure the version you installed is up-to-date
+kubectl version --client
+kubectl version --short
+```
+
+#### Ubuntu
+
+```bash
+# As a root user first
+sudo su
+
+# Install
+sudo apt-get update && sudo apt-get install -y apt-transport-https
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y kubectl
 
 # Exit root
 exit
