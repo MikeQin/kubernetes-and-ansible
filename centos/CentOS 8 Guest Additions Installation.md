@@ -12,7 +12,10 @@ To get full screen with CentOS 8 Workstation:
 sudo yum update --nobest
 sudo yum install -y gcc
 sudo yum install -y make perl
+
+# This kernel-devel-$(uname -r) must be re-executed after each kernal update
 sudo yum install -y kernel-devel-$(uname -r)
+
 sudo yum install -y elfutils-libelf-devel
 ```
 
